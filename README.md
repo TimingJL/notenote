@@ -38,6 +38,16 @@ $ bundle install
 
 Then run the `rails server` and go to `http://localhost:3000` to make sure everything is correct.       
 
+# Rubygems Install
+Before we create the view file, let's install a few gems for our application.       
+In `Gemfile`
+```
+gem 'devise'
+gem 'simple_form', github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
+gem 'haml', '~> 4.0.5'
+```
+Save that, run `bundle install` and restart our server.
+
 
 # Welcome Page
 We're gonna have users and a user can only be able to see their own notes.       
@@ -56,3 +66,21 @@ Rails.application.routes.draw do
 end
 ```
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome_controller.jpeg)
+
+
+
+Let's go to `app/views/welcome` and rename `index.html.erb` to `index.html.haml`.
+```haml
+%h1 Welcome#index
+%p Find me in app/views/welcome/index.html.erb
+```
+
+
+
+# CRUD
+Next we wanna to is create our note. A user have the ability to add notes, edit, and delete notes as well.      
+
+```console
+$ rails g model Note title:string content:text
+$ rake db:migrate
+```
