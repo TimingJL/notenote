@@ -193,3 +193,4 @@ And in `app/views/notes/index.html.haml`, let's loop through all of the notes he
 	%h2= link_to note.title, note
 	%p= time_ago_in_words(note.created_at)
 ```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/loop_through.jpeg)
