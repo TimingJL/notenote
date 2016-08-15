@@ -58,7 +58,7 @@ $ rails g controller Welcome index
 ```
 
 In `config/routes.rb`, let's setup the root of the application.
-```
+```ruby
 Rails.application.routes.draw do
   get 'welcome/index'
 
@@ -83,4 +83,56 @@ Next we wanna to is create our note. A user have the ability to add notes, edit,
 ```console
 $ rails g model Note title:string content:text
 $ rake db:migrate
+
+
+$ rails g controller Notes
 ```
+
+We add the rule of routes:            
+In `config/routes.rb`
+```ruby
+Rails.application.routes.draw do
+  get 'welcome/index'
+
+  root 'welcome#index'
+
+  resources :notes
+end
+```
+
+
+
+And in `app/controllers/notes_controller.rb`
+```ruby
+class NotesController < ApplicationController
+	def index
+	end
+
+	def show
+	end
+
+	def new
+	end
+
+	def create
+	end
+
+	def edit
+	end
+
+	def update
+	end
+
+	def destroy
+	end
+
+	private
+
+	def find_note
+	end
+
+	def note_params
+	end
+end
+```
+(13:10)
