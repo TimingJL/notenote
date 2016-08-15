@@ -160,6 +160,7 @@ So under `app/views/notes`, let's create some new files:
 	2. _form.html.haml
 	3. show.html.haml
 	4. index.html.haml
+	5. edit.html.haml
 
 In `app/views/notes/new.html.haml`
 ```haml
@@ -192,5 +193,57 @@ And in `app/views/notes/index.html.haml`, let's loop through all of the notes he
 - @notes.each do |note|
 	%h2= link_to note.title, note
 	%p= time_ago_in_words(note.created_at)
+
+= link_to 'New Note', new_note_path
 ```
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/loop_through.jpeg)
+
+
+### Edit & Destroy
+
+Inside of `app/controllers/notes_controller.rb`
+```ruby
+def update
+	if @note.update(note_params)
+		redirect_to @note
+	else
+		render 'edit'
+	end
+end
+
+def destroy
+	@note.destroy
+	redirect_to notes_path
+end
+```
+
+
+In `app/views/notes/show.html.haml`
+```haml
+%h1= @note.title
+%p= simple_format @note.content
+
+= link_to 'All Notes',  notes_path
+= link_to 'Edit',  edit_note_path(@note)
+= link_to 'Delete',  note_path(@note), method: :delete, data: { confirm: 'Are you sure?' }
+```
+
+And in `app/views/notes/edit.html.haml`
+```haml
+%h1 Edit Your Note
+
+= render 'form'
+
+= link_to 'Cancel', note_path
+```
+
+
+
+
+
+
+
+
+To be continued...
+
+
