@@ -275,7 +275,9 @@ Some setup you must do manually if you haven't yet:
 ===============================================================================
 ```
 
-Let's rename the `application.html.erb` to `application.html.haml` under `app/views/layouts`
+Let's paste `config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }` in `config/environments/development.rb`.     
+
+And rename the `application.html.erb` to `application.html.haml` under `app/views/layouts`
 ```haml
 !!!
 %html
@@ -320,6 +322,7 @@ Then let's pop into the rails console, we can see the `user_id` is `nil`. Which 
 $ rails console
 
 > @note = Note.first
+
   Note Load (0.6ms)  SELECT  "notes".* FROM "notes" ORDER BY "notes"."id" ASC LIMIT ?  [["LIMIT", 1]]             
 => #<Note id: 1, title: "Books I want to read", content: "Hooked by Nir Eyal",          
 created_at: "2016-08-15 05:46:27", updated_at: "2016-08-15 05:46:27", user_id: nil>
@@ -365,7 +368,7 @@ def create
 end
 ```
 
-Now, we go to `http://localhost:3000/notes/new` to create a new note, we can see:
+Now, we go to `http://localhost:3000/notes/new` to create a new note:
 ```console
 $ rails c
 
@@ -376,9 +379,25 @@ $ rails c
 created_at: "2016-08-15 08:50:16", updated_at: "2016-08-15 08:50:16", user_id: 1>
 ```
 
-So now the `user_id` is `1`.
+We can see the `user_id` is `1`. That is good.
 
 
+### Change index to show only current users posts
+Now, anybody can see all the notes which is created on the index page. But we only want to build the show what belongs to that current user.    
+So in `app/controllers/notes_controller.rb`, we tweak
+```ruby
+def index
+	@notes = Note.all.order("created_at DESC")
+end
+```
+
+to
+
+```ruby
+def index
+	@notes = Note.where(user_id: current_user)
+end
+```
 
 
 To be continued...
