@@ -238,9 +238,70 @@ And in `app/views/notes/edit.html.haml`
 ```
 
 
+# Devise
+
+After we install Devise and add it to our Gemfile, we need to run the generator:
+```console
+$ rails g devise:install
 
 
+===============================================================================
 
+Some setup you must do manually if you haven't yet:
+
+  1. Ensure you have defined default url options in your environments files. Here
+     is an example of default_url_options appropriate for a development environment
+     in config/environments/development.rb:
+
+       config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+     In production, :host should be set to the actual host of your application.
+
+  2. Ensure you have defined root_url to *something* in your config/routes.rb.
+     For example:
+
+       root to: "home#index"
+
+  3. Ensure you have flash messages in app/views/layouts/application.html.erb.
+     For example:
+
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
+  4. You can copy Devise views (for customization) to your app by running:
+
+       rails g devise:views
+
+===============================================================================
+```
+
+Let's rename the `application.html.erb` to `application.html.haml` under `app/views/layouts`
+```haml
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Notenote
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    %p.notice= notice
+    %p.alert= alert
+    = yield
+```
+
+and do 
+```console
+$ rails g devise:views
+```
+
+
+Next thing we need to do is generate a devise model.
+```console
+$ rails g devise User
+$ rake db:migrate
+```
 
 
 
