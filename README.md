@@ -36,4 +36,23 @@ Because there is no Javascript interpreter for Rails on Ubuntu Operation System,
 $ bundle install
 ```
 
-Then run the `rails server` and go to `http://localhost:3000` to make sure everything is correct. 
+Then run the `rails server` and go to `http://localhost:3000` to make sure everything is correct.       
+
+
+# Welcome Page
+We're gonna have users and a user can only be able to see their own notes.       
+Let's start out by creating our welcome controller first.   
+
+```console
+$ rails g controller Welcome index
+```
+
+In `config/routes.rb`, let's setup the root of the application.
+```
+Rails.application.routes.draw do
+  get 'welcome/index'
+
+  root 'welcome#index'
+end
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome_controller.jpeg)
