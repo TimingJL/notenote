@@ -303,6 +303,82 @@ $ rails g devise User
 $ rake db:migrate
 ```
 
+We may go to `http://localhost:3000/users/sign_up` to make sure everything is correct.
+![image](https://github.com/TimingJL/notenote/blob/master/pic/sign_up.jpeg)
+
+
+Next, we want to make sure when we create a new note that is from the current user.        
+So what we need to do is run the migration to add the user model to our note's table.
+```console
+$ rails g migration add_user_id_to_notes user_id:integer
+$ rake db:migrate
+```
+
+
+Then let's pop into the rails console, we can see the `user_id` is `nil`. Which means user_id is added into the column of the table.
+```console
+$ rails console
+
+> @note = Note.first
+  Note Load (0.6ms)  SELECT  "notes".* FROM "notes" ORDER BY "notes"."id" ASC LIMIT ?  [["LIMIT", 1]]             
+=> #<Note id: 1, title: "Books I want to read", content: "Hooked by Nir Eyal",          
+created_at: "2016-08-15 05:46:27", updated_at: "2016-08-15 05:46:27", user_id: nil>
+```
+
+Next thing we want to do is add association between our user model and our note model. And then we want to build out the note from our user.        
+
+In `app/models/user.rb`
+```ruby
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+  has_many :notes
+end
+```
+
+In `app/models/note.rb`
+```ruby
+class Note < ApplicationRecord
+	belongs_to :user
+end
+```
+
+
+
+Then we need to tweak how the note are created.           
+In `app/controllers/notes_controller.rb`
+```ruby
+def new
+	@note = current_user.notes.build
+end
+
+def create
+	@note = current_user.notes.build(note_params)
+
+	if @note.save
+		redirect_to @note
+	else
+		render 'new'
+	end
+end
+```
+
+Now, we go to `http://localhost:3000/notes/new` to create a new note, we can see:
+```console
+$ rails c
+
+> @note = Note.last
+
+  Note Load (0.5ms)  SELECT  "notes".* FROM "notes" ORDER BY "notes"."id" DESC LIMIT ?  [["LIMIT", 1]]           
+=> #<Note id: 4, title: "This note should have a User", content: "asdf asdf asdf asdf",           
+created_at: "2016-08-15 08:50:16", updated_at: "2016-08-15 08:50:16", user_id: 1>
+```
+
+So now the `user_id` is `1`.
+
+
 
 
 To be continued...
