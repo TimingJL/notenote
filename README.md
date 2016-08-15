@@ -46,7 +46,12 @@ gem 'devise'
 gem 'simple_form', github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
 gem 'haml', '~> 4.0.5'
 ```
-Save that, run `bundle install` and restart our server.
+Save that, run `bundle install` and restart our server.    
+
+To install simple_form, we should run the generator:
+```console
+$ rails g simple_form:install
+```
 
 
 # Welcome Page
@@ -105,16 +110,27 @@ end
 And in `app/controllers/notes_controller.rb`
 ```ruby
 class NotesController < ApplicationController
+	before_action :find_note, only: [:show, :edit, :update, :destroy]
+	
 	def index
+		@notes = Note.all.order("created_at DESC")
 	end
 
 	def show
 	end
 
 	def new
+		@note = Note.new
 	end
 
 	def create
+		@note = Note.new(note_params)
+
+		if @note.save
+			redirect_to @note
+		else
+			render 'new'
+		end
 	end
 
 	def edit
@@ -129,10 +145,51 @@ class NotesController < ApplicationController
 	private
 
 	def find_note
+		@note = Note.find(params[:id])
 	end
 
 	def note_params
+		params.require(:note).permit(:title, :content)
 	end
 end
 ```
-(13:10)
+
+
+So under `app/views/notes`, let's create some new files:
+	1. new.html.haml
+	2. _form.html.haml
+	3. show.html.haml
+	4. index.html.haml
+
+In `app/views/notes/new.html.haml`
+```haml
+%h1 Add a New Note
+
+= render 'form'
+```
+
+
+Let's add our form in `app/views/notes/_form.html.haml`
+```haml
+= simple_form_for @note do |f|
+	= f.input :title
+	= f.input :content
+	= f.button :submit
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/add_note.jpeg)
+
+
+In `app/views/notes/show.html.haml`
+```haml
+%h1= @note.title
+%p= simple_format @note.content
+
+= link_to 'All Notes',  notes_path
+```
+
+And in `app/views/notes/index.html.haml`, let's loop through all of the notes here.
+```haml
+- @notes.each do |note|
+	%h2= link_to note.title, note
+	%p= time_ago_in_words(note.created_at)
+```
