@@ -16,6 +16,7 @@ https://mackenziechild.me/12-in-12/11/
 
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome.jpeg)
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/note.jpeg)
+![image](https://github.com/TimingJL/notenote/blob/master/pic/show_page.jpeg)
 
 
 ### Highlights of this course
@@ -1239,6 +1240,25 @@ So in `app/views/notes/index.html.haml`
 			= link_to "New Note", new_note_path, class: 'button'
 ```
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/note.jpeg)
+
+
+### Style the Show Page
+
+Now, let's do the show page.
+In `app/views/notes/show.html.haml`
+```haml
+.wrapper_with_padding
+	#note_show
+		%h1.title= @note.title
+		%p= simple_format(@note.content)
+
+		.buttons
+			= link_to "Edit", edit_note_path(@note), class: "button"
+			= link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" }, class: "button"
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/show_page.jpeg)
+
+
 
 To be continued...
 
