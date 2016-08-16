@@ -1259,6 +1259,88 @@ In `app/views/notes/show.html.haml`
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/show_page.jpeg)
 
 
+### Style Form
+
+In `app/views/notes/new.html.haml`
+```haml
+.wrapper_with_padding
+	%h1 Add A Note
+
+	= render 'form'
+```
+
+In `app/views/notes/edit.html.haml`
+```haml
+.wrapper_with_padding
+	%h1 Edit Note
+
+	= render 'form'
+
+	= link_to "Cancel", note_path
+```
+
+
+In `app/views/notes/_form.html.haml`
+```haml
+= simple_form_for @note do |f|
+	= f.input :title
+	= f.input :content
+	= f.button :submit, class: 'button'
+```
+
+
+In `app/views/devise/registrations/new.html.haml`
+```haml
+.wrapper_with_padding
+  %h2 Sign up
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = f.error_notification
+    .form-inputs
+      = f.input :email, required: true, autofocus: true
+      = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable)
+      = f.input :password_confirmation, required: true
+    .form-actions
+      = f.button :submit, "Sign up", class: 'button'
+```
+
+
+In `app/views/devise/registrations/edit.html.haml`
+```haml
+%h2
+  Edit #{resource_name.to_s.humanize}
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :email, required: true, autofocus: true
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      %p
+        Currently waiting confirmation for: #{resource.unconfirmed_email}
+    = f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false
+    = f.input :password_confirmation, required: false
+    = f.input :current_password, hint: "we need your current password to confirm your changes", required: true
+  .form-actions
+    = f.button :submit, "Update"
+%h3 Cancel my account
+%p
+  Unhappy? #{link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
+= link_to "Back", :back
+```
+
+
+In `app/views/devise/sessions/edit.html.haml`
+```haml
+.wrapper_with_padding
+  %h2 Log in
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .form-inputs
+      = f.input :email, required: false, autofocus: true
+      = f.input :password, required: false
+      = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+    .form-actions
+      = f.button :submit, "Log in", class: 'button'
+  = render "devise/shared/links"
+  ```
+
 
 To be continued...
 
