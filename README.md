@@ -14,7 +14,7 @@ This time we built a online notebook application. We have users, and a user have
 https://mackenziechild.me/12-in-12/11/        
 
 
-![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome.jpeg)
+![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome_cdn.jpeg)
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/note.jpeg)
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/show_page.jpeg)
 
@@ -1339,9 +1339,88 @@ In `app/views/devise/sessions/edit.html.haml`
     .form-actions
       = f.button :submit, "Log in", class: 'button'
   = render "devise/shared/links"
-  ```
+```
 
 
-To be continued...
+### Using Font Awesome
+
+http://fontawesome.io/get-started/            
+
+We add this to `app/views/layouts/application.html.haml`
+```html
+%link{:href => "path/to/font-awesome/css/font-awesome.min.css", :rel => "stylesheet"}/
+```
+
+like
+
+```haml
+!!!
+%html
+%head
+    %title NoteNote | Online Notebook Application
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %link{:href => "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    = csrf_meta_tags
+%body
+    %header
+        .header_inner
+            = link_to image_tag( 'logo.svg'), root_path, id: "logo"
+            %nav
+                - if user_signed_in?
+                    = link_to "New Note", new_note_path
+                    = link_to "Sign Out", destroy_user_session_path, method: :delete
+                - else
+                    = link_to "Log In", new_user_session_path
+    %p.notice= notice
+    %p.alert= alert
+    = yield
+```
+
+
+
+
+
+Then in `app/views/welcome/index.html.haml`
+```haml
+#banner
+	.banner_content
+		%h1 NoteNote
+		%p Your online notebook. Never forget an idea again.
+		%p= link_to "Sign Up", new_user_registration_path, class: "button"
+
+#testimonial
+	.wrapper
+		%p.quote "The greatest notebook application. Period."
+		%p.name - Timing.JL
+#callouts
+	.callout_inner
+		.wrapper
+			.callout
+				%i.fa.fa-pencil{"aria-hidden" => "true"}
+				%h2 Notes
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%i.fa.fa-rocket{"aria-hidden" => "true"}
+				%h2 Rocket
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%i.fa.fa-bolt{"aria-hidden" => "true"}
+				%h2 Lighting
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+#bottom_cta
+	.wrapper
+		%h2 For Realz!
+		%p I want you to sign up... If you don’t. I will find you!
+		= link_to "Click Meee!!!", new_user_registration_path, class: 'button'
+
+%footer
+	%p Timing.JL
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome_cdn.jpeg)
+
+Finished!
 
 

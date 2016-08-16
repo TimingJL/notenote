@@ -55,8 +55,13 @@
 	.callout {
 		text-align: center;
 		width: 33.3333%;
-		padding: 1.5rem 2.5%;
+		padding: 5.5rem 2.5%;
 		float: left;
+		i {
+			font-size: 2.5rem;
+			color: $green;
+		}
+
 		h2 {
 			@include bold_font;
 			color: white;
