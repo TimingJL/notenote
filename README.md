@@ -14,6 +14,10 @@ This time we built a online notebook application. We have users, and a user have
 https://mackenziechild.me/12-in-12/11/        
 
 
+![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome.jpeg)
+![image](https://github.com/TimingJL/notenote/blob/master/pic/note.jpeg)
+
+
 ### Highlights of this course
 1. Users
 2. Notes
@@ -1215,6 +1219,26 @@ In `app/views/welcome/index.html.haml`, we want to add a banner
 ```
 ![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome.jpeg)
 
+
+
+### Style How the Note Show Up
+Next, let's style how the note show up. It's already style in css. 
+So in `app/views/notes/index.html.haml`
+```haml
+.wrapper_with_padding
+	#notes.clearfix
+		- unless @notes.blank?
+			- @notes.each do |note|
+				%a{ href: (url_for [note])}
+					.note
+						%p.title= note.title
+						%p.date= time_ago_in_words(note.created_at)
+		- else
+			%h2 Add a Note
+			%p It appears you haven't created any notes yet... Lets fix that. Why don't you go ahead and create a new note.
+			= link_to "New Note", new_note_path, class: 'button'
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/note.jpeg)
 
 To be continued...
 
