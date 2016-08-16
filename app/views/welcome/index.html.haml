@@ -1,2 +1,32 @@
-%h1 Welcome#index
-%p Find me in app/views/welcome/index.html.erb
+#banner
+	.banner_content
+		%h1 NoteNote
+		%p Your online notebook. Never forget an idea again.
+		%p= link_to "Sign Up", new_user_registration_path, class: "button"
+
+#testimonial
+	.wrapper
+		%p.quote "The greatest notebook application. Period."
+		%p.name - Timing.JL
+#callouts
+	.callout_inner
+		.wrapper
+			.callout
+				%h2 Notes
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%h2 Rocket
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%h2 Lighting
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+#bottom_cta
+	.wrapper
+		%h2 For Realz!
+		%p I want you to sign up... If you don’t. I will find you!
+		= link_to "Click Meee!!!", new_user_registration_path, class: 'button'
+
+%footer
+	%p Timing.JL

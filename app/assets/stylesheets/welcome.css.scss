@@ -1,5 +1,5 @@
 #banner {
-	background-image: url(image_path("welcome_banner_image.jpg"));
+	background-image: url(image_path("welcome_banner_image.jpeg"));
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top center;
@@ -13,14 +13,14 @@
 		h1 {
 			@include bold_font;
 			color: white;
-			font-size: 3.5rem;
-			margin: 0;
+			font-size: 5.5rem;
+			margin: 10;
 		}
 		p {
 			font-size: 1.5rem;
-			margin: 0 0 2.5rem 0;
+			margin: 0 0 13.5rem 0;
 			color: rgba(250, 250, 250, 0.5);
-		}
+		}		
 	}
 }
 
@@ -41,12 +41,12 @@
 }
 
 #callouts {
-	background-image: url(image_path("callout_background.jpg"));
+	background-image: url(image_path("callout_background.jpeg"));
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top center;
 	width: 100%;
-	min-height: 400px;
+	min-height: 100%;
 	display: table;
 	.callout_inner {
 		display: table-cell;

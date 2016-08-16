@@ -1150,9 +1150,70 @@ In `app/assets/stylesheets/welcome.css.scss`
 ```
 
 
+### Structure
+In `app/views/layouts/application.html.haml`
+```haml
+!!!
+%html
+%head
+	%title NoteNote | Online Notebook Application
+	= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+	= javascript_include_tag 'application', 'data-turbolinks-track' => true
+	= csrf_meta_tags
+%body
+	%header
+		.header_inner
+			= link_to image_tag( 'logo.svg'), root_path, id: "logo"
+			%nav
+				- if user_signed_in?
+					= link_to "New Note", new_note_path
+					= link_to "Sign Out", destroy_user_session_path, method: :delete
+				- else
+					= link_to "Log In", new_user_session_path
+	%p.notice= notice
+	%p.alert= alert
+
+	= yield
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/structure.jpeg)
 
 
+In `app/views/welcome/index.html.haml`, we want to add a banner
+```haml
+#banner
+	.banner_content
+		%h1 NoteNote
+		%p Your online notebook. Never forget an idea again.
+		%p= link_to "Sign Up", new_user_registration_path, class: "button"
 
+#testimonial
+	.wrapper
+		%p.quote "The greatest notebook application. Period."
+		%p.name - Timing.JL
+#callouts
+	.callout_inner
+		.wrapper
+			.callout
+				%h2 Notes
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%h2 Rocket
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+
+			.callout
+				%h2 Lighting
+				%p Viral Echo Park Intelligentsia tattooed, craft beer organic authentic polaroid tousled mlkshk church-key. Fanny pack Banksy vegan  authentic Helvetica.
+#bottom_cta
+	.wrapper
+		%h2 For Realz!
+		%p I want you to sign up... If you don’t. I will find you!
+		= link_to "Click Meee!!!", new_user_registration_path, class: 'button'
+
+%footer
+	%p Timing.JL
+```
+![image](https://github.com/TimingJL/notenote/blob/master/pic/welcome.jpeg)
 
 
 To be continued...
